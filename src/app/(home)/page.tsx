@@ -1,10 +1,8 @@
 "use client";
 
-import { type Key } from "react";
-import { toast } from "sonner";
-import { MagneticText } from "~/components/ui/MagneticText";
-import { SpotlightButton } from "~/components/ui/SpotlightButton";
 import { getProducts } from "../_actions/products";
+import { Hero } from "./_components/Hero";
+import StickyScroll from "./_components/StickyScroll";
 
 const favorites = [
   {
@@ -102,114 +100,9 @@ export default function Page() {
 
   return (
     <div className="bg-white dark:bg-zinc-900">
-      <div className="h-screen overflow-hidden pb-80 pt-16 sm:pb-40 sm:pt-24 lg:pb-48 lg:pt-40">
-        <div className="relative mx-auto max-w-7xl px-4 sm:static sm:px-6 lg:px-8">
-          <div className="sm:max-w-lg">
-            <MagneticText
-              body={"BLK ROSE"}
-              as="div"
-              className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-6xl"
-            >
-              {(tokens: unknown[]) =>
-                tokens.map((token: unknown, index: Key | null | undefined) => (
-                  <MagneticText.Token
-                    key={index}
-                    body={token}
-                    className="inline-block cursor-default whitespace-pre"
-                  />
-                ))
-              }
-            </MagneticText>
-            <p className="mt-4 text-xl text-zinc-500">
-              This year, our new summer collection will shelter you from the
-              harsh elements of a world that doesnt care if you live or die.
-            </p>
-          </div>
-          <div>
-            <div className="mt-10">
-              {/* Decorative image grid */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none lg:absolute lg:inset-y-0 lg:mx-auto lg:w-full lg:max-w-7xl"
-              >
-                <div className="absolute transform sm:left-1/2 sm:top-0 sm:translate-x-8 lg:left-1/2 lg:top-1/2 lg:-translate-y-1/2 lg:translate-x-8">
-                  <div className="flex items-center space-x-6 lg:space-x-8">
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg sm:opacity-0 lg:opacity-100">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-01.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-02.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-03.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-04.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-05.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                    <div className="grid flex-shrink-0 grid-cols-1 gap-y-6 lg:gap-y-8">
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-06.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                      <div className="h-64 w-44 overflow-hidden rounded-lg">
-                        <img
-                          src="https://tailwindui.com/img/ecommerce-images/home-page-03-hero-image-tile-07.jpg"
-                          alt=""
-                          className="h-full w-full object-cover object-center"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      <Hero />
 
-              <button
-                onClick={() => {
-                  handleGetProducts().catch((error) => {
-                    console.error(error);
-                  });
-                }}
-              >
-                <SpotlightButton>
-                  <span className="font-mona relative mt-px bg-gradient-to-b from-white/25 to-white bg-clip-text text-lg font-medium text-transparent transition-all duration-200">
-                    Shop now
-                  </span>
-                </SpotlightButton>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <StickyScroll />
       <main>
         {/* Category section */}
         <section aria-labelledby="category-heading" className="bg-zinc-50">

@@ -34,10 +34,12 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
       forcedTheme={theme}
       disableTransitionOnChange
     >
-      <div className="fixed z-50 mt-4 hidden w-full items-center justify-center md:flex   ">
+      <div className="fixed z-50 mt-8 flex w-screen items-center px-8">
         <Navigation
           as="nav"
-          className="relative rounded-full border border-white/10 bg-white/5 p-3"
+          fluid
+          duration={350}
+          className="relative mx-auto rounded-2xl bg-zinc-900/50 p-4"
         >
           {({
             ready,
@@ -46,38 +48,59 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
             duration,
           }: {
             ready: boolean;
-            size: number;
-            position: number;
-            duration: number;
+            size: string;
+            position: string;
+            duration: string;
           }) => (
-            <div
-              style={{
-                // @ts-expect-error // ignore this line
-                "--size": size,
-                "--position": position,
-                "--duration": duration,
-              }}
-              className="flex"
-            >
+            <div className="relative">
               <div
+                style={{
+                  // @ts-expect-error - TS doesn't like the custom properties
+                  "--size": size,
+                  "--position": position,
+                  "--duration": duration,
+                }}
                 className={clsx(
                   { hidden: !ready },
-                  "absolute bottom-0 h-1/2 w-[var(--size)] translate-x-[var(--position)] bg-white/75 blur-xl transition-[width,transform] duration-300",
+                  "duration-[--duration] absolute inset-y-0 left-0 h-full w-[--size] translate-x-[--position] rounded-lg bg-zinc-950/70 transition-[width,transform]",
                 )}
-              ></div>
-
-              <div className="absolute inset-0 rounded-full bg-zinc-800/90"></div>
-
-              <DesktopNavItems
-                items={items}
-                navigate={navigate}
-                ready={ready}
               />
-              <ThemeSwitcher setTheme={setTheme} theme={theme} />
 
-              {/* TODO: Shopping cart here */}
-
-              {/* TODO: User Dropdown here */}
+              <Navigation.List
+                as="ul"
+                className="relative flex items-center gap-3"
+              >
+                {items.map((item, index) => (
+                  <Navigation.Item
+                    key={index}
+                    as="li"
+                    onActivated={navigate}
+                    className=""
+                  >
+                    {({
+                      setActive,
+                      isActive,
+                    }: {
+                      setActive: () => void;
+                      isActive: boolean;
+                    }) => (
+                      <a
+                        onClick={setActive}
+                        href="#"
+                        className={clsx(
+                          isActive
+                            ? "text-white"
+                            : "text-white/60 hover:text-white",
+                          "inline-block px-4 py-1 text-sm transition",
+                        )}
+                      >
+                        {item}
+                      </a>
+                    )}
+                  </Navigation.Item>
+                ))}
+                <ThemeSwitcher theme={theme} setTheme={setTheme} />
+              </Navigation.List>
             </div>
           )}
         </Navigation>
