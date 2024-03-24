@@ -17,10 +17,10 @@ export default function ThemeSwitcher({
         }}
       >
         {theme === "light" && (
-          <SunIcon className="h-6 w-6  dark:hover:text-zinc-400" />
+          <SunIcon className="h-5 w-5 text-zinc-300 transition-colors  hover:text-zinc-50" />
         )}
         {theme === "dark" && (
-          <MoonIcon className="h-6 w-6  dark:hover:text-zinc-400" />
+          <MoonIcon className="h-5 w-5 text-zinc-300 transition-colors hover:text-zinc-50 " />
         )}
       </button>
     </>
