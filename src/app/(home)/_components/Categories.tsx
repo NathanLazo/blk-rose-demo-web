@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Categories() {
   return (
-    <section aria-labelledby="category-heading" className="bg-zinc-50">
+    <section aria-labelledby="category-heading">
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-32 lg:px-8">
         <div className="sm:flex sm:items-baseline sm:justify-between">
           <h2

@@ -1,30 +1,62 @@
 "use server";
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { env } from "~/env";
+import { postToShopify } from "~/server/shopify";
 
-export async function getProducts({
-  query,
-  variables,
-}: {
-  query: string;
-  variables?: Record<string, unknown>;
-}) {
-  const endpoint = env.SHOPIFY_STORE_DOMAIN;
-  const key = env.PRIVATE_STOREFRONT_API_KEY;
-
+export async function getProducts() {
   try {
-    const result = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Shopify-Storefront-Access-Token": key,
-      },
-      body: { query, variables } && JSON.stringify({ query, variables }),
+    const result = await await postToShopify({
+      query: `
+        query getProductList {
+          products(sortKey: PRICE, first: 100, reverse: true) {
+            edges {
+              node {
+                id
+                handle
+                description
+                title
+                totalInventory
+                variants(first: 5) {
+                  edges {
+                    node {
+                      id
+                      title
+                      quantityAvailable
+                      priceV2 {
+                        amount
+                        currencyCode
+                      }
+                    }
+                  }
+                }
+                priceRange {
+                  maxVariantPrice {
+                    amount
+                    currencyCode
+                  }
+                  minVariantPrice {
+                    amount
+                    currencyCode
+                  }
+                }
+                images(first: 1) {
+                  edges {
+                    node {
+                      src
+                      altText
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      `,
+      variables: {},
     });
-
     return {
-      status: result.status,
-      body: await result.json(),
+      status: 200,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+      body: result,
     };
   } catch (error) {
     console.error("Error:", error);
